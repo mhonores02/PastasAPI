@@ -12,6 +12,7 @@ public class ApplicationContext : DbContext
     public DbSet<Client> Clients => Set<Client>();
     public DbSet<Product> Products => Set<Product>();
     public DbSet<Cart> Carts => Set<Cart>();
+    public DbSet<CartItem> CartItems => Set<CartItem>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -24,5 +25,17 @@ public class ApplicationContext : DbContext
             .HasOne(c => c.Cart)
             .WithOne(c => c.Client)
             .HasForeignKey<Cart>(c => c.ClientId);
+
+        // Cart 1 a muchos CartItem
+        modelBuilder.Entity<CartItem>()
+            .HasOne(ci => ci.Cart)
+            .WithMany(c => c.Items)
+            .HasForeignKey(ci => ci.CartId);
+
+        // Product 1 a muchos CartItem (un producto puede estar en muchos carritos distintos)
+        modelBuilder.Entity<CartItem>()
+            .HasOne(ci => ci.Product)
+            .WithMany()
+            .HasForeignKey(ci => ci.ProductId);
     }
 }

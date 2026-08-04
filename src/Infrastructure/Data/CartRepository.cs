@@ -11,7 +11,8 @@ public class CartRepository : BaseRepository<Cart>, ICartRepository
     public Cart? GetCartByClientId(int clientId)
     {
         return _context.Carts
-            .Include(c => c.Products)
+            .Include(c => c.Items)
+                .ThenInclude(i => i.Product)
             .FirstOrDefault(c => c.ClientId == clientId);
     }
 

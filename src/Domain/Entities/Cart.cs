@@ -14,7 +14,7 @@ public class Cart
     [ForeignKey("Client")]
     public int ClientId { get; set; }
 
-    public ICollection<Product>? Products { get; set; } = new List<Product>();
+    public ICollection<CartItem>? Items { get; set; } = new List<CartItem>();
     public float TotalPrice { get; set; }
     public CartEnum Status { get; set; }
     public string? PaymentMethod { get; set; }
@@ -24,7 +24,7 @@ public class Cart
 
     public Cart()
     {
-        Products = new List<Product>();
+        Items = new List<CartItem>();
         TotalPrice = 0;
         Status = CartEnum.Pending;
         PaymentMethod = string.Empty;

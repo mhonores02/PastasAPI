@@ -46,6 +46,10 @@ public class CartController : ControllerBase
         {
             return NotFound(ex.Message);
         }
+        catch (NotAllowedException ex)
+        {
+            return BadRequest(ex.Message);
+        }
     }
 
     [HttpDelete("products/{productId}")]
