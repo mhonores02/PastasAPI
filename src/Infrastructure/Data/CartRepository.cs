@@ -14,4 +14,12 @@ public class CartRepository : BaseRepository<Cart>, ICartRepository
             .Include(c => c.Products)
             .FirstOrDefault(c => c.ClientId == clientId);
     }
+
+    public Cart CreateForClient(int clientId)
+    {
+        var cart = new Cart { ClientId = clientId };
+        _context.Carts.Add(cart);
+        _context.SaveChanges();
+        return cart;
+    }
 }
